@@ -5,7 +5,7 @@ import { Container, HStack, Button, RadioGroup, Radio } from '@chakra-ui/react';
 import Loader from "./Loader";
 import ErrorComponent from './ErrorComponent';
 import CoinCard from './CoinCard';
-
+import { Input } from '@chakra-ui/react';
 
 const Coins = () => {
   const [coins, setCoins] = useState([]);
@@ -14,6 +14,8 @@ const Coins = () => {
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState("inr");
   const [counter, setCounter] = useState(0);
+
+  const [searchQuery, setSearchQuery] = useState('');
   const currencySymbol = currency === "inr" ? "₹" : currency === "eur" ? "€" : "$"
 
   const changePage = (page) => {
@@ -41,12 +43,20 @@ const Coins = () => {
     fetchCoins();
   }, [currency, page, counter]);
 
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter(seconds => seconds + 1);
     }, 10000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   if (error)
     return <ErrorComponent message={"Error While Fetching Coins"} />;
@@ -67,8 +77,17 @@ const Coins = () => {
             </HStack>
           </RadioGroup>
 
+          <Input
+          marginLeft={"15px"}
+          box-width={"98px"}
+            type="text"
+            placeholder="Search coins..."
+            value={searchQuery}
+            onChange={handleSearch}
+            p={'8'}
+          />
           <HStack wrap={"wrap"} justifyContent={"space-evenly"}>
-            {coins.map((i) => (
+            {filteredCoins.map((i) => (
               <CoinCard
                 id={i.id}
                 key={i.id}
