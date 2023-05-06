@@ -68,7 +68,6 @@ const Coins = () => {
       ) : (
         <>
 
-
           <RadioGroup value={currency} onChange={setCurrency} p={"8"}>
             <HStack spacing={"4"}>
               <Radio value={'inr'}>INR</Radio>
@@ -119,6 +118,7 @@ const Coins = () => {
           </HStack>
 
         </>
+        //test
       )}
     </Container>
   );
