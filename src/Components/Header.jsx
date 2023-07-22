@@ -17,7 +17,7 @@ const Header = () => {
   }
 `;
   return (
-  <HStack p = {"4"} shadow={"base"} backgroundColor={"gray.900"} >
+  <HStack p = {"4"} shadow={"base"} backgroundColor={"blackAlpha.800"} >
 
     <Button variant={"unstyled"} color = {"white"}  _hover={{ animation: `${popout} 0.3s ease-out forwards` }}>
 
